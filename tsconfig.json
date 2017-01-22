@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"jsx": "react",
+		"module": "es2015",
+		"types": [
+			"chrome"
+		]
+	},
+	"files": [
+		"typings/index.d.ts",
+		"src/main.tsx"
+	]
+}

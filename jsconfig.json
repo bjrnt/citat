@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6"
+  },
+  "files": [
+    "scripts/",
+    "pages/"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "typeAcquisition": {
+    "include": [
+      
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+#most-visited {
+  margin-top: 2em !important;
+}
+
+#prm {
+  color: #AAA;
+  font-style: italic;
+  font-size: 1.5rem;
+  max-width: 40rem;
+}
+
+#author {
+  text-align: right;
+  font-size: 1.0rem;
+}
