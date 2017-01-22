@@ -1,13 +1,13 @@
 # CITAT
 
-WIP Google Chrome extension that shows you quotes of your choosing whenever you open a new tab.
+**WIP** Google Chrome extension that shows you quotes of your choosing whenever you open a new tab.
 
 ## Installation
 
 1. Install all dependencies and build the extension.
-```
-yarn && npm run build-prod
-```
+   ```
+    yarn && npm run build-prod
+   ```
 
 2. Open Google Chrome and go to `chrome://extensions/`.
 

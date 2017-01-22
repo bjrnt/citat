@@ -1,25 +1,25 @@
-import * as React from 'react'
-import QuoteForm from './QuoteForm'
-import { loadQuotes, saveQuotes } from './storage'
-import { Quote } from './Quote'
+import * as React from 'react';
+import QuoteForm from './QuoteForm';
+import { loadQuotes, saveQuotes } from './storage';
+import { Quote } from './Quote';
 // import QuoteList from './QuoteList'
 
 export default 
 class App extends React.Component<{}, { quotes: Quote[] }> {
   constructor() {
-    super()
+    super();
 
     this.state = {
       quotes: []
-    }
+    };
 
-    this.loadQuotes()
+    this.loadQuotes();
   }
 
   loadQuotes() {
     loadQuotes().then(quotes => {
-      this.setState({ ...this.state, quotes })
-    })
+      this.setState({ ...this.state, quotes });
+    });
   }
 
   render() {
@@ -35,6 +35,6 @@ class App extends React.Component<{}, { quotes: Quote[] }> {
           </div>
         </div>
       </section>
-    )
+    );
   }
 }

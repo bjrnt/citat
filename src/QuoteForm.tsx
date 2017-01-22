@@ -1,13 +1,13 @@
-import * as React from 'react'
-import { Quote } from './Quote'
+import * as React from 'react';
+import { Quote } from './Quote';
 
-interface IState {
+type IState = {
   quote: string,
   author: string,
   reference: string
 }
 
-interface IProps {
+type IProps = {
   saveQuote: (Quote) => void,
   quote?: Quote
 }
@@ -24,38 +24,38 @@ class QuoteForm extends React.Component<IProps, IState> {
     super(props)
 
     if (props.quote) {
-      this.state = props.quote
+      this.state = props.quote;
     } else {
-      this.state = EMPTY_STATE
+      this.state = EMPTY_STATE;
     }
   }
 
   handleQuoteChange = (event: React.FormEvent) => {
-    const target = event.target as HTMLTextAreaElement
-    this.setState({ ...this.state, quote: target.value.trim() })
+    const target = event.target as HTMLTextAreaElement;
+    this.setState({ ...this.state, quote: target.value.trim() });
   }
 
   handleAuthorChange = (event: React.FormEvent) => {
-    const target = event.target as HTMLInputElement
-    this.setState({ ...this.state, author: target.value.trim() })
+    const target = event.target as HTMLInputElement;
+    this.setState({ ...this.state, author: target.value.trim() });
   }
 
   handleReferenceChange = (event: React.FormEvent) => {
-    const target = event.target as HTMLInputElement
-    this.setState({ ...this.state, reference: target.value.trim() })
+    const target = event.target as HTMLInputElement;
+    this.setState({ ...this.state, reference: target.value.trim() });
   }
 
   reset = () => {
-    this.setState(EMPTY_STATE)
+    this.setState(EMPTY_STATE);
   }
 
   saveQuote = () => {
-    this.props.saveQuote(this.state)
-    this.setState(EMPTY_STATE)
+    this.props.saveQuote(this.state);
+    this.setState(EMPTY_STATE);
   }
 
   canSave() {
-    return this.state.quote.length > 0 && this.state.author.length > 0
+    return this.state.quote.length > 0 && this.state.author.length > 0;
   }
 
   render() {
@@ -79,6 +79,6 @@ class QuoteForm extends React.Component<IProps, IState> {
           <button className="button is-link" onClick={this.reset}>Reset</button>
         </p>
       </div>
-    )
+    );
   }
 }
