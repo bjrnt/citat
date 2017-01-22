@@ -2,7 +2,7 @@ import * as React from 'react';
 import QuoteForm from './QuoteForm';
 import { loadQuotes, saveQuotes } from './storage';
 import { Quote } from './Quote';
-// import QuoteList from './QuoteList'
+// import QuoteList from './QuoteList';
 
 export default 
 class App extends React.Component<{}, { quotes: Quote[] }> {
@@ -17,9 +17,24 @@ class App extends React.Component<{}, { quotes: Quote[] }> {
   }
 
   loadQuotes() {
-    loadQuotes().then(quotes => {
-      this.setState({ ...this.state, quotes });
+    loadQuotes()
+    .then(quotes => {
+      this.setState({ quotes });
     });
+  }
+
+  saveQuotes() {
+    saveQuotes(this.state.quotes)
+    .catch(e => {
+      console.error(e);
+    });
+  }
+
+  saveQuote = (q: Quote) => {
+    const quotes = this.state.quotes;
+    quotes.push(q);
+    this.setState({ quotes });
+    this.saveQuotes();
   }
 
   render() {
@@ -31,7 +46,7 @@ class App extends React.Component<{}, { quotes: Quote[] }> {
           </div>
           <br />
           <div>
-            <QuoteForm saveQuote={(q) => { console.log(q) }} />
+            <QuoteForm saveQuote={this.saveQuote} />
           </div>
         </div>
       </section>

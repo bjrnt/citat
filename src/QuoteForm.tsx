@@ -2,18 +2,18 @@ import * as React from 'react';
 import { Quote } from './Quote';
 
 type IState = {
-  quote: string,
+  text: string,
   author: string,
   reference: string
 }
 
 type IProps = {
-  saveQuote: (Quote) => void,
+  saveQuote: (q: Quote) => void,
   quote?: Quote
 }
 
 const EMPTY_STATE = {
-  quote: '',
+  text: '',
   author: '',
   reference: ''
 }
@@ -32,7 +32,7 @@ class QuoteForm extends React.Component<IProps, IState> {
 
   handleQuoteChange = (event: React.FormEvent) => {
     const target = event.target as HTMLTextAreaElement;
-    this.setState({ ...this.state, quote: target.value.trim() });
+    this.setState({ ...this.state, text: target.value.trim() });
   }
 
   handleAuthorChange = (event: React.FormEvent) => {
@@ -55,7 +55,7 @@ class QuoteForm extends React.Component<IProps, IState> {
   }
 
   canSave() {
-    return this.state.quote.length > 0 && this.state.author.length > 0;
+    return this.state.text.length > 0 && this.state.author.length > 0;
   }
 
   render() {
@@ -63,7 +63,7 @@ class QuoteForm extends React.Component<IProps, IState> {
       <div>
         <label className="label">Quote</label>
         <p className="control">
-          <textarea className="textarea" value={this.state.quote} onChange={this.handleQuoteChange}>
+          <textarea className="textarea" value={this.state.text} onChange={this.handleQuoteChange}>
           </textarea>
         </p>
         <label className="label">Author</label>

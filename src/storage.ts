@@ -3,7 +3,7 @@ import { Quote } from './Quote';
 export function loadQuotes(): Promise<Array<Quote>> {
   return new Promise(resolve => {
     chrome.storage.sync.get(data => {
-      resolve(data['quotes']);
+      resolve(data['quotes'] || []);
     });
   });
 }
