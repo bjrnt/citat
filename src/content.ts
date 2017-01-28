@@ -15,8 +15,23 @@ function createAuthor(quote: Quote) {
   return author;
 }
 
-window.chrome.runtime.onMessage.addListener((quote: Quote, sender, sendResponse) => {
+const OPTIONS_PAGE_URL = chrome.extension.getURL('pages/options.html');
+function createGuide() {
+  const elem = document.createElement('p');
+  elem.id = 'guide';
+  elem.innerHTML = `
+    Click <a href="${OPTIONS_PAGE_URL}" target="_blank">here</a> to add your first quote to Citat!
+  `;
+  return elem;
+}
+
+window.chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   const wrapper = document.querySelector('#prm');
-  wrapper.appendChild(createQuoteBody(quote));
-  wrapper.appendChild(createAuthor(quote));
+  const quote = msg.quote;
+  if (quote != null) {
+    wrapper.appendChild(createQuoteBody(quote));
+    wrapper.appendChild(createAuthor(quote));
+  } else {
+    wrapper.appendChild(createGuide());
+  }
 });
