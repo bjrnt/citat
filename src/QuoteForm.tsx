@@ -5,18 +5,18 @@ type IState = {
   text: string,
   author: string,
   reference: string
-}
+};
 
 type IProps = {
   saveQuote: (q: Quote) => void,
   quote?: Quote
-}
+};
 
-const EMPTY_STATE = {
+const EMPTY_STATE: IState = {
   text: '',
   author: '',
   reference: ''
-}
+};
 
 export default
 class QuoteForm extends React.Component<IProps, IState> {

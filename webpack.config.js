@@ -3,8 +3,12 @@ const path = require('path');
 const node = { fs: 'empty', net: 'empty' };
 
 module.exports = {
-  entry: './src/main.tsx',
-  output: { filename: './app/dist/main.js' },
+  entry: {
+    main: './src/main.tsx',
+    content: './src/content.ts',
+    background: './src/background.ts'
+  },
+  output: { filename: './app/dist/[name].js' },
   module: {
     loaders: [
       {

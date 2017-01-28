@@ -13,7 +13,7 @@
   "options_page": "pages/options.html",
   "background": {
     "scripts": [
-      "scripts/background.js"
+      "dist/background.js"
     ]
   },
   "content_scripts": [
@@ -22,7 +22,7 @@
         "<all_urls>"
       ],
       "js": [
-        "scripts/content.js"
+        "dist/content.js"
       ],
       "css": [
         "styles/content.css"

@@ -1,11 +1,13 @@
-function createQuoteBody(quote) {
+import { Quote } from './Quote';
+
+function createQuoteBody(quote: Quote) {
   const quoteBody = document.createElement('p');
   quoteBody.id = 'quoteBody';
   quoteBody.innerText = `"${quote.text}"`;
   return quoteBody;
 }
 
-function createAuthor(quote) {
+function createAuthor(quote: Quote) {
   const author = document.createElement('p');
   const reference = quote.reference ? ', ' + quote.reference : '';
   author.id = 'author';
@@ -13,10 +15,8 @@ function createAuthor(quote) {
   return author;
 }
 
-window.chrome.runtime.onMessage.addListener((quote, sender, sendResponse) => {
-  console.log(quote)
+window.chrome.runtime.onMessage.addListener((quote: Quote, sender, sendResponse) => {
   const wrapper = document.querySelector('#prm');
   wrapper.appendChild(createQuoteBody(quote));
   wrapper.appendChild(createAuthor(quote));
-  // document.querySelector('#prm').innerText = `"${quote.text}" - ${quote.author}, ${quote.reference}`
 });
