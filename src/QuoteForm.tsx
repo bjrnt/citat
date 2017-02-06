@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Quote } from './Quote';
 
-type IState = {
-  text: string,
-  author: string,
-  reference: string
-};
+type IState = Pick<Quote, 'text' | 'author' | 'reference'>;
 
 type IProps = {
-  saveQuote: (q: Quote) => void,
-  quote?: Quote
+  createQuote: (q: Pick<Quote, 'text' | 'author' | 'reference'>) => void,
+  updateQuote: (q: Quote) => void,
+  editingQuote?: Quote
 };
 
 const EMPTY_STATE: IState = {
@@ -23,7 +20,7 @@ class QuoteForm extends React.Component<IProps, IState> {
   constructor(props) {
     super(props)
 
-    if (props.quote) {
+    if (props.editingQuote) {
       this.state = props.quote;
     } else {
       this.state = EMPTY_STATE;
@@ -32,25 +29,29 @@ class QuoteForm extends React.Component<IProps, IState> {
 
   handleQuoteChange = (event: React.FormEvent) => {
     const target = event.target as HTMLTextAreaElement;
-    this.setState({ ...this.state, text: target.value.trim() });
+    this.setState({ ...this.state, text: target.value });
   }
 
   handleAuthorChange = (event: React.FormEvent) => {
     const target = event.target as HTMLInputElement;
-    this.setState({ ...this.state, author: target.value.trim() });
+    this.setState({ ...this.state, author: target.value });
   }
 
   handleReferenceChange = (event: React.FormEvent) => {
     const target = event.target as HTMLInputElement;
-    this.setState({ ...this.state, reference: target.value.trim() });
+    this.setState({ ...this.state, reference: target.value });
   }
 
   reset = () => {
     this.setState(EMPTY_STATE);
   }
 
-  saveQuote = () => {
-    this.props.saveQuote(this.state);
+  onSaveQuote = () => {
+    if (this.props.editingQuote) {
+      this.props.updateQuote({ id: this.props.editingQuote.id, ...this.state });
+    } else {
+      this.props.createQuote({ ...this.state });
+    }
     this.setState(EMPTY_STATE);
   }
 
@@ -75,7 +76,7 @@ class QuoteForm extends React.Component<IProps, IState> {
           <input className="input" type="text" value={this.state.reference} onChange={this.handleReferenceChange} />
         </p>
         <p className="control">
-          <button className="button is-primary" onClick={this.saveQuote} disabled={!this.canSave()}>Save Quote</button>
+          <button className="button is-primary" onClick={this.onSaveQuote} disabled={!this.canSave()}>Save Quote</button>
           <button className="button is-link" onClick={this.reset}>Reset</button>
         </p>
       </div>

@@ -2,39 +2,66 @@ import * as React from 'react';
 import QuoteForm from './QuoteForm';
 import { loadQuotes, saveQuotes } from './storage';
 import { Quote } from './Quote';
-// import QuoteList from './QuoteList';
+import QuoteList from './QuoteList';
+import { uuid } from './Utils';
+
+interface IState {
+  quotes: Quote[],
+  editingQuote?: Quote
+};
 
 export default 
-class App extends React.Component<{}, { quotes: Quote[] }> {
+class App extends React.Component<{}, IState> {
   constructor() {
     super();
 
     this.state = {
-      quotes: []
+      quotes: [],
+      editingQuote: null
     };
 
-    this.loadQuotes();
+    this.loadQuotesFromStorage();
   }
 
-  loadQuotes() {
+  loadQuotesFromStorage() {
     loadQuotes()
     .then(quotes => {
-      this.setState({ quotes });
+      this.setState({ ...this.state, quotes });
     });
   }
 
-  saveQuotes() {
+  saveQuotesToStorage() {
     saveQuotes(this.state.quotes)
     .catch(e => {
       console.error(e);
     });
   }
 
-  saveQuote = (q: Quote) => {
+  createQuote = (q: Pick<Quote, 'text' | 'author' | 'reference'>) => {
+    const newQuote = { ...q } as Quote;
+    newQuote.id = uuid();
+
     const quotes = this.state.quotes;
-    quotes.push(q);
-    this.setState({ quotes });
-    this.saveQuotes();
+    quotes.push(newQuote);
+
+    this.setState({ ...this.state, quotes, editingQuote: null });
+    this.saveQuotesToStorage();
+  }
+
+  updateQuote = (q: Quote) => {
+    const quotes = this.state.quotes;
+    const index = quotes.findIndex(quote => quote.id === q.id);
+    quotes[index] = { ...quotes[index], ...q };
+    this.setState({ ...this.state, quotes, editingQuote: null });
+  }
+
+  removeQuote = ({ id }: Quote) => {
+    const quotes = this.state.quotes.filter(quote => quote.id !== id);
+    this.setState({ ...this.state, ...quotes });
+  }
+
+  onEditQuote = (q: Quote) => {
+    this.setState({ ...this.state, editingQuote: q });
   }
 
   render() {
@@ -45,9 +72,17 @@ class App extends React.Component<{}, { quotes: Quote[] }> {
             <h1 className="title">Citat</h1>
           </div>
           <br />
-          <div>
-            <QuoteForm saveQuote={this.saveQuote} />
-          </div>
+          <QuoteForm 
+            createQuote={this.createQuote} 
+            editingQuote={this.state.editingQuote || undefined}
+            updateQuote={this.updateQuote}
+          />
+          <br />
+          <QuoteList 
+            quotes={this.state.quotes} 
+            onEditQuote={this.onEditQuote}
+            removeQuote={this.removeQuote}
+          />
         </div>
       </section>
     );
