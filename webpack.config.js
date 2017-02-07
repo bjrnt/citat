@@ -14,14 +14,15 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [ path.resolve(__dirname, 'node_modules/preact-compat/src') ],
+        include: [path.resolve(__dirname, 'node_modules/preact-compat/src')],
       },
       { test: /\.tsx?$/, loader: 'babel-loader!ts-loader' },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.(scss|sass)$/, loader: 'style-loader!css-loader!sass-loader' }
     ],
   },
   node: node,
   devtool: 'source-map',
-  resolve: { extensions: [ '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx' ] },
+  resolve: { extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx'] },
   plugins: [],
 };
