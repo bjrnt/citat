@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Quote } from './Quote';
 
-type IState = Pick<Quote, 'text' | 'author' | 'reference'>;
+type IState = Partial<Quote>;
 
 type IProps = {
   createQuote: (q: Pick<Quote, 'text' | 'author' | 'reference'>) => void,
@@ -12,18 +12,25 @@ type IProps = {
 const EMPTY_STATE: IState = {
   text: '',
   author: '',
-  reference: ''
+  reference: '',
+  id: null
 };
 
 export default
 class QuoteForm extends React.Component<IProps, IState> {
-  constructor(props) {
-    super(props)
+  constructor(props: IProps) {
+    super(props);
 
     if (props.editingQuote) {
-      this.state = props.quote;
+      this.state = { ...props.editingQuote };
     } else {
       this.state = EMPTY_STATE;
+    }
+  }
+
+  componentWillReceiveProps({ editingQuote }: IProps) {
+    if (editingQuote) {
+      this.setState({ ...editingQuote });
     }
   }
 
@@ -47,10 +54,12 @@ class QuoteForm extends React.Component<IProps, IState> {
   }
 
   onSaveQuote = () => {
-    if (this.props.editingQuote) {
-      this.props.updateQuote({ id: this.props.editingQuote.id, ...this.state });
+    if (this.state.id) {
+      const editedQuote = { ...this.props.editingQuote, ...this.state };
+      this.props.updateQuote(editedQuote);
     } else {
-      this.props.createQuote({ ...this.state });
+      const newQuote = { ...this.state } as Pick<Quote, 'text' | 'author' | 'reference'>;
+      this.props.createQuote(newQuote);
     }
     this.setState(EMPTY_STATE);
   }

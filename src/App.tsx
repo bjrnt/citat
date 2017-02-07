@@ -74,7 +74,7 @@ class App extends React.Component<{}, IState> {
           <br />
           <QuoteForm 
             createQuote={this.createQuote} 
-            editingQuote={this.state.editingQuote || undefined}
+            editingQuote={this.state.editingQuote}
             updateQuote={this.updateQuote}
           />
           <br />
