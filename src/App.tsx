@@ -4,6 +4,7 @@ import { loadQuotes, saveQuotes } from './storage';
 import { Quote } from './Quote';
 import QuoteList from './QuoteList';
 import { uuid } from './Utils';
+import isEqual = require('lodash.isequal');
 
 interface IState {
   quotes: Quote[],
@@ -21,6 +22,12 @@ class App extends React.Component<{}, IState> {
     };
 
     this.loadQuotesFromStorage();
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (!isEqual(prevState.quotes, this.state.quotes)) {
+      this.saveQuotesToStorage();
+    }
   }
 
   loadQuotesFromStorage() {
@@ -45,7 +52,6 @@ class App extends React.Component<{}, IState> {
     quotes.push(newQuote);
 
     this.setState({ ...this.state, quotes, editingQuote: null });
-    this.saveQuotesToStorage();
   }
 
   updateQuote = (q: Quote) => {
@@ -57,7 +63,7 @@ class App extends React.Component<{}, IState> {
 
   removeQuote = ({ id }: Quote) => {
     const quotes = this.state.quotes.filter(quote => quote.id !== id);
-    this.setState({ ...this.state, ...quotes });
+    this.setState({ ...this.state, quotes });
   }
 
   onEditQuote = (q: Quote) => {

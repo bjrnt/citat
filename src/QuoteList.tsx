@@ -32,7 +32,7 @@ export default ({ quotes, removeQuote, onEditQuote }: Props) => {
       </thead>
       <tbody>
         {quotes.map(quote => (
-          <tr>
+          <tr key={quote.id}>
             <td>{quote.text}</td>
             <td>{quote.author}</td>
             <td>{quote.reference || "None"}</td>

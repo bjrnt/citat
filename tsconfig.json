@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "es6",
 		"jsx": "react",
-		"module": "es2015",
+		"module": "commonjs",
 		"types": [
 			"chrome"
 		]
